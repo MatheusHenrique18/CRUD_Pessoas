@@ -1,0 +1,40 @@
+{
+  "pessoas": [
+    {
+      "id": 1,
+      "nome": "teste",
+      "email": "teste@teste.com",
+      "sexo": "Masculino",
+      "salario": 8000
+    },
+    {
+      "id": 2,
+      "nome": "jabuti123",
+      "email": "jabuti@teste.com",
+      "sexo": "Masculino",
+      "salario": 15000
+    },
+    {
+      "id": 3,
+      "nome": "tomcat editado",
+      "email": "tomcat@teste.com",
+      "sexo": "Masculino",
+      "salario": 35000
+    },
+    {
+      "codigo": "4",
+      "nome": "hercules",
+      "email": "hercules@teste.com",
+      "sexo": "Masculino",
+      "salario": "10000",
+      "id": 4
+    },
+    {
+      "id": 5,
+      "nome": "Matheus Henrique",
+      "email": "MH@teste.com",
+      "sexo": "Masculino",
+      "salario": "8000"
+    }
+  ]
+}

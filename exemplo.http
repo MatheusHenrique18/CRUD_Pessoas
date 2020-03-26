@@ -1,0 +1,33 @@
+
+### método recuperar uma lista de registros
+GET http://localhost:3000/pessoas
+
+### método recuperar um registro específico, passando o id como parâmetro
+GET http://localhost:3000/pessoas/1
+
+### método para adicionar um registro
+POST http://localhost:3000/pessoas HTTP/1.1
+content-type: application/json
+
+{
+    "id": 3,
+    "nome": "tomcat",
+    "email": "tomcat@teste.com",
+    "sexo": "Masculino",
+    "salario": 1000
+}
+
+### método para edição, necessário passar o id do registro como parâmetro
+PUT http://localhost:3000/pessoas/3 HTTP/1.1
+content-type: application/json
+
+{
+    "id": 3,
+    "nome": "tomcat editado",
+    "email": "tomcat@teste.com",
+    "sexo": "Masculino",
+    "salario": 35000
+}
+
+### método para deletar um registro, passando o id como parâmetro
+DELETE http://localhost:3000/pessoas/3 HTTP/1.1

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crud de Pessoas</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Angular -->
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <!-- <script type="text/javascript" src="js/angular.js"></script> -->
+
+  <!-- Controller -->
+  <script type="text/javascript" src="js/app.js"></script>
+
+</head>
+
+<body ng-app="cadastroPessoa" ng-controller="pessoaController">
+
+  <div class="container">
+    <hr>
+    <button type="button" class="btn btn-success btn-lg pull-right" data-toggle="modal"
+      data-target="#cadastrarPessoaModal">
+      <svg class="bi bi-person-plus-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 100-6 3 3 0 000 6zm7.5-3a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1H13V5.5a.5.5 0 01.5-.5z"
+          clip-rule="evenodd" />
+        <path fill-rule="evenodd" d="M13 7.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H14v1.5a.5.5 0 01-1 0v-2z"
+          clip-rule="evenodd" />
+      </svg>
+      Novo
+    </button>
+
+
+    <h2 ng-bind="app"></h2>
+    
+    <hr>
+    <div class="alert alert-success" role="alert" ng-if="messageSuccess">
+      <a href="#" class="close" ng-click="clearMessages()">&times;</a>
+      {{messageSuccess}}
+    </div>
+
+    <span class="clearfix"></span>
+
+    <!-- Campo para pesquisar Regsitros -->
+    <input type="text" class="form-control" placeholder="Buscar Registro" ng-model="criterioBusca">
+    <hr>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Sexo</th>
+          <th>Salário</th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="pessoa in pessoas | filter:criterioBusca">
+          <td>{{pessoa.id}}</td>
+          <td>{{pessoa.nome}}</td>
+          <td>{{pessoa.email}}</td>
+          <td>{{pessoa.sexo}}</td>
+          <td>{{pessoa.salario | currency:"R$ ":2}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#alterarPessoaModal" ng-click="selecionarPessoa(pessoa)">
+              <svg class="bi bi-pencil-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z" />
+                <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z"
+                  clip-rule="evenodd" />
+              </svg>
+              Editar
+            </button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletarPessoaModal" ng-click="selecionarPessoa(pessoa)">
+              <svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M2.5 1a1 1 0 00-1 1v1a1 1 0 001 1H3v9a2 2 0 002 2h6a2 2 0 002-2V4h.5a1 1 0 001-1V2a1 1 0 00-1-1H10a1 1 0 00-1-1H7a1 1 0 00-1 1H2.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM8 5a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 018 5zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z"
+                  clip-rule="evenodd" />
+              </svg>
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal para Cadastro-->
+  <div class="modal fade" id="cadastrarPessoaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Cadastrar Pessoa</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Código</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="sequenceID" placeholder="Código" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoa.nome" placeholder="Nome">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoa.email" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Sexo</label>
+              <div class="col-sm-10">
+                <select class="form-control" ng-model="pessoa.sexo">
+                  <option value="">--Selecione--</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Feminino">Feminino</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Salário</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoa.salario" placeholder="Salário">
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal"
+            ng-click="cadastrarPessoa(pessoa)">Salvar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Edição-->
+  <div class="modal fade" id="alterarPessoaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Alterar Pessoa</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Código</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoaSelecionada.id" placeholder="Código"
+                  disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoaSelecionada.nome" placeholder="Nome">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoaSelecionada.email" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Sexo</label>
+              <div class="col-sm-10">
+                <select class="form-control" ng-model="pessoaSelecionada.sexo">
+                  <option selected>--Selecione--</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Feminino">Feminino</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Salário</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="pessoaSelecionada.salario" placeholder="Salário">
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="alterarPessoa(pessoaSelecionada)">Salvar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Exclusão-->
+  <div class="modal fade" id="deletarPessoaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="alert alert-danger" role="alert">
+            <h3 class="alert-heading">Deseja mesmo excluir o registro ?</h3>
+          </div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Código</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="pessoaSelecionada.id" placeholder="Código" disabled>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Nome</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="pessoaSelecionada.nome" placeholder="Nome" disabled>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="pessoaSelecionada.email" placeholder="Email" disabled>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Sexo</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="pessoaSelecionada.sexo" disabled>
+                <option selected>--Selecione--</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Salário</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="pessoaSelecionada.salario" placeholder="Salário" disabled>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="excluirPessoa(pessoaSelecionada)">Sim</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
