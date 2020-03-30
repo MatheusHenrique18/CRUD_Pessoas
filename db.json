@@ -35,6 +35,20 @@
       "email": "MH@teste.com",
       "sexo": "Masculino",
       "salario": "8000"
+    },
+    {
+      "nome": "joana",
+      "email": "joana@joana.com",
+      "sexo": "Feminino",
+      "salario": "8000",
+      "id": 6
+    },
+    {
+      "nome": "Bruna",
+      "email": "bruna@bruna.com",
+      "sexo": "Feminino",
+      "salario": "88888",
+      "id": 7
     }
   ]
 }
