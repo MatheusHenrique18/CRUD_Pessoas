@@ -31,24 +31,24 @@
     },
     {
       "id": 5,
-      "nome": "Matheus Henrique",
+      "nome": "Matheus",
       "email": "MH@teste.com",
       "sexo": "Masculino",
       "salario": "8000"
     },
     {
-      "nome": "joana",
+      "nome": "joana da silva santos",
       "email": "joana@joana.com",
       "sexo": "Feminino",
       "salario": "8000",
       "id": 6
     },
     {
-      "nome": "Bruna",
-      "email": "bruna@bruna.com",
-      "sexo": "Feminino",
-      "salario": "88888",
-      "id": 7
+      "nome": "matheus henrique",
+      "email": "testando@hotmail.com",
+      "sexo": "Masculino",
+      "salario": "5000",
+      "id": 8
     }
   ]
 }

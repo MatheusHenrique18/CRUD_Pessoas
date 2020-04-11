@@ -4,6 +4,7 @@ cadastroPessoa.controller("pessoaController", function($scope, $http, pessoasAPI
     $scope.app = "Registro de Pessoas";
     $scope.messageSuccess = "";
     $scope.pessoas = [];
+    $scope.pessoa;
     
     //apenas para indicar id do novo registro a ser criado pelo usuário
     $scope.sequenceID = 0;
@@ -46,6 +47,7 @@ cadastroPessoa.controller("pessoaController", function($scope, $http, pessoasAPI
         pessoasAPI.savePessoas(pessoa).then(function(response){
             $scope.messageSuccess = "Registro cadastrado com sucesso!";
             listarPessoas();
+            delete $scope.pessoa;
         },function(error){
             error = "Sistema não conseguiu cadastrar pessoa corretamente.";
             console.log(error);
@@ -54,7 +56,6 @@ cadastroPessoa.controller("pessoaController", function($scope, $http, pessoasAPI
 
     $scope.selecionarPessoa = function(pessoa){
         $scope.pessoaSelecionada = pessoa;
-        console.log($scope.pessoaSelecionada);
     };
 
     $scope.alterarPessoa = function(pessoaSelecionada){

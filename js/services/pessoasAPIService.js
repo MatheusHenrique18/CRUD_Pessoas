@@ -1,4 +1,6 @@
-angular.module("cadastroPessoa").factory("pessoasAPI", function($http){
+var cadastroPessoa = angular.module("cadastroPessoa");
+
+cadastroPessoa.factory("pessoasAPI", function($http){
     var _getPessoas = function(){
         return $http.get("http://localhost:3000/pessoas");
     };

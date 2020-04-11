@@ -17,6 +17,7 @@
   <!-- Controller -->
   <script type="text/javascript" src="js/controllers/pessoaController.js"></script>
   <script type="text/javascript" src="js/services/pessoasAPIService.js"></script>
+  <script type="text/javascript" src="js/filters/myFilters.js"></script>
 
 </head>
 
@@ -66,7 +67,7 @@
       <tbody>
         <tr ng-repeat="pessoa in pessoas | filter:criterioBusca">
           <td>{{pessoa.id}}</td>
-          <td>{{pessoa.nome}}</td>
+          <td>{{pessoa.nome | titlecase}}</td>
           <td>{{pessoa.email}}</td>
           <td>{{pessoa.sexo}}</td>
           <td>{{pessoa.salario | currency:"R$ ":2}}</td>
